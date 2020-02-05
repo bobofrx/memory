@@ -6,6 +6,7 @@ import './App.css'
 import Card from './Card'
 import GuessCount from './GuessCount'
 import HallOfFame, { FAKE_HOF} from './HallOfFame'
+import HighScoreInput from './HighScoreInput';
 
 const SIDE = 6
 const SYMBOLS = '😀🎉💖🎩🐶🐱🦄🐬🌍🌛🌞💫🍎🍌🍓🍐🍟🍿'
@@ -16,6 +17,7 @@ state = {
   cards: this.generateCards(),
   currentPair: [],
   guesses: 0,
+  hallOfFame: null,
   matchedCardIndices: [],
 }
 
@@ -78,13 +80,18 @@ state = {
     setTimeout(() => this.setState({ currentPair: [] }), VISUAL_PAUSE_MSECS)
   }
 
+  displayHallOfFame = (hallOfFame) => {
+    this.setState({hallOfFame})
+  }
+
   render() {
-    const { cards, guesses, matchedCardIndices } = this.state
+    const { cards, guesses, matchedCardIndices, hallOfFame } = this.state
     const won = matchedCardIndices.length === cards.length
     
     return (
       <div className="memory">
-        <GuessCount guesses={guesses} />
+        <HighScoreInput guesses={guesses} />
+        {won && < HallOfFame entries={FAKE_HOF} />}
         {cards.map((card, index) => (
           <Card
           card={card}
