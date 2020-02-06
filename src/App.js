@@ -90,8 +90,13 @@ state = {
     
     return (
       <div className="memory">
-        <HighScoreInput guesses={guesses} />
-        {won && < HallOfFame entries={FAKE_HOF} />}
+        
+        {won && 
+          (hallOfFame ? (
+            <HallOfFame entries={hallOfFame} />
+          ) : (
+            <HighScoreInput guesses={guesses} onStored={this.displayHallOfFame} />
+          ) )}
         {cards.map((card, index) => (
           <Card
           card={card}
@@ -104,6 +109,7 @@ state = {
         {won && <HallOfFame entries={FAKE_HOF} />}
 
       {/*
+      <HighScoreInput guesses={guesses} />
         <Card card="😀" feedback="hidden" onClick={this.handleCardClick} />
         <Card card="🎉" feedback="justMatched" onClick={this.handleCardClick} />
         <Card
